@@ -30,9 +30,24 @@ fn main() {
         }
     };
 
-    is_leap_year(year);
+    println!("{} is a leap year {}", year, is_leap_year(year));
 }
 
-fn is_leap_year(year: u32) -> bool {}
+fn is_leap_year(year: u32) -> bool {
+    year % 4 == 0 && year % 100 == 0 && year % 400 == 0 || year % 4 == 0 && year % 100 != 0
+}
 
-fn read_userinput(prompt: &str) -> String {}
+fn read_userinput(prompt: &str) -> String {
+    let stdin = io::stdin();
+
+    print!("{}\n", prompt);
+    let mut raw_input = String::new();
+    match stdin.read_line(&mut raw_input) {
+        Ok(_) => {
+            raw_input = raw_input.trim().to_string();
+    
+            raw_input
+        }
+        Err(_) => String::new()
+    }
+}

@@ -27,16 +27,35 @@ cargo add rand -> See cargo.toml
 
 use rand::prelude::*;
 use std::io;
+
 fn main() {
     // read guests
     let names = input("Gib die Namen der Gäste ein, getrennt durch ', ': ");
     let mut vector: Vec<&str> = Vec::new();
 
     // split names
-
+    // TODO: make cooler...
+    for iter in names.split(",").map(|f| f.trim()) {
+        vector.push(iter);
+    }
+    
     // randomly choose guest
     let mut rng = thread_rng();
     let random_index = rng.gen_range(0..vector.len());
+    println!("{} has to pay the bill", vector[random_index]);
 }
 
-fn input(prompt: &str) -> String {}
+fn input(prompt: &str) -> String {
+    let stdin = io::stdin();
+
+    print!("{}\n", prompt);
+    let mut raw_input = String::new();
+    match stdin.read_line(&mut raw_input) {
+        Ok(_) => {
+            raw_input = raw_input.trim().to_string();
+    
+            raw_input
+        }
+        Err(_) => String::new()
+    }
+}

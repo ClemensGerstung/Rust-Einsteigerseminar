@@ -20,18 +20,35 @@ EN:     Write a program that evenly distributes the bill of a table to all guest
 
 use std::io; // Import the io library
 
-// Main function to start the program
-
 fn main() -> io::Result<()> {
-    let bill = 0;
+    let person_count = read_value("How many people?", 1);
+    let bill = read_value("Total bill?", 1);
+    let tip_percentage = read_value("Tip (in %)?", 1);
 
-    let tip = bill * tip_percentage / 100.0;
-    let total = bill + tip;
-    let total_per_person = total / person_count;
+    let tip = (bill * tip_percentage) as f32 / 100.0;
+    let total = bill as f32 + tip;
+    let total_per_person = total / person_count as f32;
 
-    println!("Tip: {:.2}", tip);
-    println!("Total: {:.2}", total);
-    println!("Total per guest: {:.2}", total_per_person);
+    println!("Bill: {:.2}, Tip: {:.2}, Total: {:.2}, Bill per Person: {:.2}, Tip per Person: {:.2}, Total per Person: {:.2}", 
+                bill, tip, total, bill / person_count, tip / person_count as f32, total_per_person);
 
     Ok(())
+}
+
+fn read_value(msg: &str, def: i32) -> i32 {
+    let stdin = io::stdin();
+
+    print!("{}\n", msg);
+    let mut raw_input = String::new();
+    match stdin.read_line(&mut raw_input) {
+        Ok(_) => {
+            raw_input = raw_input.trim().to_string();
+    
+            match raw_input.parse::<i32>() {
+                Ok(i) => i,
+                Err(_) => def
+            }
+        }
+        Err(_) => def
+    }
 }

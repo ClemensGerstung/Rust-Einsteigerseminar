@@ -19,4 +19,19 @@ fn main() {
     fizz_buzz()
 }
 
-fn fizz_buzz() {}
+fn fizz_buzz() {
+    for index in 1..=100 {
+        let out = if index % 15 == 0 {
+            "fizz buzz".to_string()
+        } else if index % 5 == 0 {
+            "buzz".to_string()
+        } else if index % 3 == 0 {
+            "fizz".to_string()
+        } else {
+            index.to_string()
+        };
+
+        print!("{}, ", out);
+    }
+    println!("");
+}
